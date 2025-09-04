@@ -1,0 +1,11 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/Lenovo/Desktop/Proje\u0441ts/LabWorkSem3/build/cmake_install.cmake",
+		"C:/Users/Lenovo/Desktop/Proje\u0441ts/LabWorkSem3/build/src/cmake_install.cmake",
+		"C:/Users/Lenovo/Desktop/Proje\u0441ts/LabWorkSem3/build/samples/cmake_install.cmake",
+		"C:/Users/Lenovo/Desktop/Proje\u0441ts/LabWorkSem3/build/gtest/cmake_install.cmake",
+		"C:/Users/Lenovo/Desktop/Proje\u0441ts/LabWorkSem3/build/test/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
