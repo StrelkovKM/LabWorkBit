@@ -1,11 +1,5 @@
-// ННГУ, ВМК, Курс "Методы программирования-2", С++, ООП
-//
-// tset.cpp - Copyright (c) Гергель В.П. 04.10.2001
-//   Переработано для Microsoft Visual Studio 2008 Сысоевым А.В. (19.04.2015)
-//
-// Множество - реализация через битовые поля
 
-#include "tset.h"
+#include "TSet.h"
 
 // Fake variables used as placeholders in tests
 static const int FAKE_INT = -1;

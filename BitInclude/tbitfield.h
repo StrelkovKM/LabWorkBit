@@ -1,55 +1,38 @@
-// ННГУ, ВМК, Курс "Методы программирования-2", С++, ООП
-//
-// tbitfield.h - Copyright (c) Гергель В.П. 07.05.2001
-//   Переработано для Microsoft Visual Studio 2008 Сысоевым А.В. (19.04.2015)
-//
-// Битовое поле
-
-#ifndef __BITFIELD_H__
-#define __BITFIELD_H__
-
+#pragma once
 #include <iostream>
-
-using namespace std;
+#include "TError.h"
 
 typedef unsigned int TELEM;
 
-class TBitField
-{
+class TBitField {
 private:
-  int  BitLen; // длина битового поля - макс. к-во битов
-  TELEM *pMem; // память для представления битового поля
-  int  MemLen; // к-во эл-тов Мем для представления бит.поля
+	int bitLen;
+	TELEM* pMem;
+	int memLen;
 
-  // методы реализации
-  int   GetMemIndex(const int n) const; // индекс в pМем для бита n       (#О2)
-  TELEM GetMemMask (const int n) const; // битовая маска для бита n       (#О3)
+	int GetMemIndex(const int n) const;
+	TELEM GetMemMask(const int n) const;
 public:
-  TBitField(int len);                //                                   (#О1)
-  TBitField(const TBitField &bf);    //                                   (#П1)
-  ~TBitField();                      //                                    (#С)
+	TBitField();
+	TBitField(int len);
+	TBitField(const TBitField& obj);
+	TBitField(TBitField&& obj) noexcept;
+	~TBitField();
 
-  // доступ к битам
-  int GetLength(void) const;      // получить длину (к-во битов)           (#О)
-  void SetBit(const int n);       // установить бит                       (#О4)
-  void ClrBit(const int n);       // очистить бит                         (#П2)
-  int  GetBit(const int n) const; // получить значение бита               (#Л1)
+	int GetLength() const;
+	void SetBit(const int n);
+	void ClrBit(const int n);
+	int GetBit(const int n) const;
 
-  // битовые операции
-  int operator==(const TBitField &bf) const; // сравнение                 (#О5)
-  int operator!=(const TBitField &bf) const; // сравнение
-  TBitField& operator=(const TBitField &bf); // присваивание              (#П3)
-  TBitField  operator|(const TBitField &bf); // операция "или"            (#О6)
-  TBitField  operator&(const TBitField &bf); // операция "и"              (#Л2)
-  TBitField  operator~(void);                // отрицание                  (#С)
+	bool operator==(const TBitField& obj) const;
+	bool operator!=(const TBitField& obj) const;
+	TBitField& operator=(const TBitField& obj);
+	TBitField& operator=(TBitField&& obj) noexcept;
+	TBitField operator|(const TBitField& obj);
+	TBitField operator&(const TBitField& obj);
+	TBitField operator~();
 
-  friend istream &operator>>(istream &istr, TBitField &bf);       //      (#О7)
-  friend ostream &operator<<(ostream &ostr, const TBitField &bf); //      (#П4)
+	friend std::istream& operator>> (std::istream& in, TBitField&bf);
+	friend std::ostream& operator<< (std::ostream& out, TBitField& bf);
+	friend std::ostream& operator<<(std::ostream& out, const TBitField& bf);
 };
-// Структура хранения битового поля
-//   бит.поле - набор битов с номерами от 0 до BitLen
-//   массив pМем рассматривается как последовательность MemLen элементов
-//   биты в эл-тах pМем нумеруются справа налево (от младших к старшим)
-// О8 Л2 П4 С2
-
-#endif
