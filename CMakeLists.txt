@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(PROJECT_NAME LabWorkBit)
+set(PROJECT_NAME set)
 project(${PROJECT_NAME})
 
-# TODO(Korniakov): not sure if these lines are needed
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE)
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
@@ -14,17 +13,17 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE})
 
-set(BIT_LIBRARY "${PROJECT_NAME}")
-set(BIT_TESTS   "${PROJECT_NAME}")
-set(BIT_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/BitInclude")
+set(MP2_LIBRARY "${PROJECT_NAME}")
+set(MP2_TESTS   "test_${PROJECT_NAME}")
+set(MP2_INCLUDE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-include_directories("${BIT_INCLUDE}" gtest)
+include_directories("${MP2_INCLUDE}" gtest)
 
 # BUILD
-add_subdirectory(BitLib)
-add_subdirectory(BitApp)
+add_subdirectory(src)
+add_subdirectory(samples)
 add_subdirectory(gtest)
-add_subdirectory(BitTest)
+add_subdirectory(test)
 
 # REPORT
 message( STATUS "")

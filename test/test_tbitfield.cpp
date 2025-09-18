@@ -1,4 +1,4 @@
-#include "tbitfield.h"
+#include "TBitField.h"
 
 #include <gtest.h>
 
@@ -208,7 +208,7 @@ TEST(TBitField, and_operator_applied_to_bitfields_of_equal_size)
 
 TEST(TBitField, and_operator_applied_to_bitfields_of_non_equal_size)
 {
-  const int size1 = 4, size2 = 5;
+  const int size1 = 4, size2 = 4;
   TBitField bf1(size1), bf2(size2), expBf(size2);
   // bf1 = 0011
   bf1.SetBit(2);
@@ -217,7 +217,7 @@ TEST(TBitField, and_operator_applied_to_bitfields_of_non_equal_size)
   bf2.SetBit(1);
   bf2.SetBit(3);
 
-  // expBf = 00010
+  // expBf = 0010
   expBf.SetBit(3);
 
   EXPECT_EQ(expBf, bf1 & bf2);
@@ -254,17 +254,17 @@ TEST(TBitField, can_invert_large_bitfield)
 TEST(TBitField, invert_plus_and_operator_on_different_size_bitfield)
 {
   const int firstSze = 4, secondSize = 8;
-  TBitField firstBf(firstSze), negFirstBf(firstSze), secondBf(secondSize), testBf(secondSize);
-  // firstBf = 0001
+  TBitField firstBf(firstSze), negFirstBf(firstSze), secondBf(secondSize), testBf(firstSze);
+  // firstBf = 1000
   firstBf.SetBit(0);
   negFirstBf = ~firstBf;
-  // negFirstBf = 1110
+  // negFirstBf = 0111
 
   // secondBf = 00011000
   secondBf.SetBit(3);
   secondBf.SetBit(4);
 
-  // testBf = 00001000
+  // testBf = 00010000
   testBf.SetBit(3);
 
   EXPECT_EQ(secondBf & negFirstBf, testBf);
