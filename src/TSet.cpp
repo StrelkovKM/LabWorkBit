@@ -1,98 +1,136 @@
 
 #include "TSet.h"
+#include <vector>
+#include "TError.h"
 
-// Fake variables used as placeholders in tests
-static const int FAKE_INT = -1;
-static TBitField FAKE_BITFIELD(1);
-static TSet FAKE_SET(1);
+#define ERROR(err,...) throw TError(err, __func__, __FILE__, __LINE__)
 
-TSet::TSet(int mp) : BitField(-1)
+TSet::TSet(int mp) : bitField(mp)
 {
 }
 
 // конструктор копирования
-TSet::TSet(const TSet &s) : BitField(-1)
+TSet::TSet(const TSet &s) : bitField( s.bitField )
 {
 }
 
 // конструктор преобразования типа
-TSet::TSet(const TBitField &bf) : BitField(-1)
+TSet::TSet(const TBitField &bf)
 {
+  this->bitField = bf;
 }
 
 TSet::operator TBitField()
 {
-    return FAKE_BITFIELD;
+  return this->bitField;
 }
 
 int TSet::GetMaxPower(void) const // получить макс. к-во эл-тов
 {
-    return FAKE_INT;
+  return this->bitField.GetLength();
 }
 
-int TSet::IsMember(const int Elem) const // элемент множества?
+int TSet::IsMember(const int index) const // элемент множества?
 {
-    return FAKE_INT;
+  return this->bitField.GetBit(index);
 }
 
-void TSet::InsElem(const int Elem) // включение элемента множества
+void TSet::InsElem(const int index) // включение элемента множества
 {
+  this->bitField.SetBit(index);
 }
 
-void TSet::DelElem(const int Elem) // исключение элемента множества
+void TSet::DelElem(const int index) // исключение элемента множества
 {
+  this->bitField.ClrBit(index);
 }
 
 // теоретико-множественные операции
 
-TSet& TSet::operator=(const TSet &s) // присваивание
+TSet& TSet::operator= (const TSet &s) // присваивание
 {
-    return FAKE_SET;
+  this->bitField = s.bitField;
+  return *this;
 }
 
-int TSet::operator==(const TSet &s) const // сравнение
+bool TSet::operator== (const TSet &s) const // сравнение
 {
-    return FAKE_INT;
+  return this->bitField == s.bitField;
 }
 
-int TSet::operator!=(const TSet &s) const // сравнение
+bool TSet::operator!= (const TSet &s) const // сравнение
 {
-    return FAKE_INT;
+  return this->bitField != s.bitField;
 }
 
-TSet TSet::operator+(const TSet &s) // объединение
+TSet TSet::operator+ (const TSet &s) // объединение
 {
-    return FAKE_SET;
+  TSet res(0);
+  res.bitField = this->bitField | s.bitField;
+  return res;
 }
 
-TSet TSet::operator+(const int Elem) // объединение с элементом
-{
-    return FAKE_SET;
+TSet TSet::operator+ (const int Elem) // объединение с элементом
+{ 
+  TSet res(*this);
+  res.InsElem(Elem);
+  return res;
 }
 
-TSet TSet::operator-(const int Elem) // разность с элементом
+TSet TSet::operator- (const int Elem) // разность с элементом
 {
-    return FAKE_SET;
+  TSet res(*this);
+  res.DelElem(Elem);
+  return res;
 }
 
-TSet TSet::operator*(const TSet &s) // пересечение
+TSet TSet::operator* (const TSet &s) // пересечение
 {
-    return FAKE_SET;
+  TSet res(0);
+  res.bitField = this->bitField & s.bitField;
+  return res;
 }
 
-TSet TSet::operator~(void) // дополнение
+TSet TSet::operator~ (void) // дополнение
 {
-    return FAKE_SET;
+  TSet res(0);
+  res.bitField = ~this->bitField;
+  return res;
 }
 
 // перегрузка ввода/вывода
 
 istream &operator>>(istream &istr, TSet &s) // ввод
 {
+  int capacity{}, i{};
+  cout << "Enter capacity of set: "; istr >> capacity;
+
+  if (capacity > -1)
+  {
+    TBitField res(capacity);
+    s.bitField = res;
+
+    cout << "Enter elements which are in the set (to stop, enter -1 or last element): ";
+    istr >> i;
+    while (i > -1 && i < s.GetMaxPower())
+    {
+      s.InsElem(s.GetMaxPower() - i - 1);
+      istr >> i;
+    }
+
     return istr;
+  }
+  else ERROR("Error_size");
 }
 
-ostream& operator<<(ostream &ostr, const TSet &s) // вывод
+ostream& operator<<(ostream& ostr, const TSet& s) // вывод
 {
-    return ostr;
+  ostr << "{ ";
+
+  for (int i = 0; i < s.GetMaxPower(); ++i)
+    if (s.IsMember(s.GetMaxPower()-i-1)) ostr << i << " ";
+
+  ostr << "}";
+
+  return ostr;
 }

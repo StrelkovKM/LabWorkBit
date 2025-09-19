@@ -1,8 +1,11 @@
 #include <iostream>
 #include "TBitField.h"
+#include "TSet.h"
 
 int main()
 {
-	TBitField K, S, M;
+	TSet K(0);
+	cin >> K;
+	cout << K;
 	 
 }

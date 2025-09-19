@@ -3,10 +3,7 @@
 
 #define ERROR(err,...) throw TError(err, __func__, __FILE__, __LINE__)
 
-
 constexpr int SIZE_TELEM_BIT = 8 * sizeof(TELEM);
-constexpr int SIZE_TELEM_BYTE = sizeof(TELEM);
-constexpr int SIZE_BIT = 8;
 
 TBitField::TBitField()
 {
@@ -20,7 +17,7 @@ TBitField::TBitField(int len)
 	if (len > 0)
 	{
 		bitLen = len;
-		memLen = ceil((double)len / SIZE_TELEM_BYTE);
+		memLen = ceil((double)len / sizeof(TELEM));
 		pMem = new TELEM[memLen]{ 0 };
 	}
 	else if (len == 0)
@@ -189,7 +186,7 @@ TBitField TBitField::operator&(const TBitField& obj) // операция "и"
 	if (!obj.pMem || !pMem) ERROR("Error_size");
 	else
 	{
-		TBitField res((bitLen < obj.bitLen) ? bitLen : obj.bitLen);
+		TBitField res((bitLen > obj.bitLen) ? bitLen : obj.bitLen);
 		for (int i = 0; i < res.memLen; i++)
 			res.pMem[i] = pMem[i] & obj.pMem[i];
 		return res;

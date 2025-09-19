@@ -12,6 +12,7 @@ private:
 
 	int GetMemIndex(const int n) const;
 	TELEM GetMemMask(const int n) const;
+
 public:
 	TBitField();
 	TBitField(int len);

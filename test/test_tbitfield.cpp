@@ -254,7 +254,7 @@ TEST(TBitField, can_invert_large_bitfield)
 TEST(TBitField, invert_plus_and_operator_on_different_size_bitfield)
 {
   const int firstSze = 4, secondSize = 8;
-  TBitField firstBf(firstSze), negFirstBf(firstSze), secondBf(secondSize), testBf(firstSze);
+  TBitField firstBf(firstSze), negFirstBf(firstSze), secondBf(secondSize), testBf(secondSize);
   // firstBf = 1000
   firstBf.SetBit(0);
   negFirstBf = ~firstBf;
