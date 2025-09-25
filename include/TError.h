@@ -10,11 +10,10 @@ class TError
 protected:
   TString err;
   TString func;
-  TString fil;
-  int lin;
+  TString file;
+  int line;
 public:
-    TError(char* error, char* function, char* file, int line);
-    TError(const char* error, const char* function, const char* file, int line);
-
-    void what();
+  TError(char* error_, char* function_, char* file_, int line_);
+  TError(const char* error_, const char* function_, const char* file_, int line_);
+  void what();
 };

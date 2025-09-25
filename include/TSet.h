@@ -1,4 +1,3 @@
-
 #include "TBitField.h"
 
 class TSet

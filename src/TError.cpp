@@ -1,29 +1,26 @@
 #include "TError.h"
 
 
-TError::TError(char* error,
-	char* function,
-	char* file,
-	int line)
+TError::TError(char* error_, char* function_, char* file_, int line_)
 {
-	err = move(error);
-	func = move(function);
-	fil = move(file);
-	lin = line;
+	err = move(error_);
+	func = move(function_);
+	file = move(file_);
+	line = line_;
 	//std::cout << "\nError: " << er << "Function: " << func << "File: " << fi <<"Line:"<<line<< endl;
 }
 
-TError::TError(const char* error, const char* function, const char* file, int line)
+TError::TError(const char* error_, const char* function_, const char* file_, int line_)
 {
-	err = move(error);
-	func = move(function);
-	fil = move(file);
-	lin = line;
-	//td::cout << "\nError: " << err << "Function: " << func << "File: " << fil <<"Line:"<<line<< endl;
+	err = move(error_);
+	func = move(function_);
+	file = move(file_);
+	line = line_;
+	//std::cout << "\nError: " << err << "Function: " << func << "File: " << fil <<"Line:"<<line<< endl;
 }
 
 void TError::what()
 {
-	std::cout << "\nError: " << err << "Function: " << func << "File: " << fil << "Line:" << lin << std::endl;
+	std::cout << "\nError: " << err << "Function: " << func << "File: " << file << "Line:" << line << std::endl;
 }
 

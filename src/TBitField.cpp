@@ -93,11 +93,13 @@ void TBitField::SetBit(const int n) // установить бит
 
 void TBitField::ClrBit(const int n)
 {
-	if (n < 0 || n >= bitLen)
-		ERROR("Error_size");
-	int index = GetMemIndex(n);
-	TELEM mask = ~GetMemMask(n);
-	pMem[index] &= mask;
+	if (n > -1 && n < bitLen)
+	{
+		int index = GetMemIndex(n);
+		TELEM mask = ~GetMemMask(n);
+		pMem[index] &= mask;
+	}
+	else ERROR("Error_size");
 }
 
 int TBitField::GetBit(const int n) const // получить значение бита
